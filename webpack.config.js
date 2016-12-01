@@ -1,14 +1,16 @@
-var path = require("path");
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const webpack = require('webpack')
+var path = require("path")
+var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 module.exports = {
   entry: {
-    client: ["./app/client.js"]
+    vendor: ["react", "react-dom", "bootstrap", "lodash", "react-router", "hapi-sdk"],
+    app: ["./app/client.js"]
   },
   output: {
     path: path.resolve(__dirname, "public"),
     publicPath: "/",
-    filename: "app.js"
+    filename: "[name].js"
   },
   module: {
     loaders: [{
@@ -28,6 +30,18 @@ module.exports = {
     }]
   },
   plugins: [
-    new ExtractTextPlugin("app.css")
+    new ExtractTextPlugin("app.css"),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      },
+      comments: false
+    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "vendor",
+      minChunks: Infinity,
+    })
   ]
-};
+}
