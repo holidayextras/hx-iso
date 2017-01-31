@@ -9,7 +9,8 @@ required to render an availability page.
 ## Running the demo
 1) Install
 `npm install` as always to get the dependencies required
-2) Starting the app
+2) You'll need to add a token to `app/availability/helpers/promiseSDK.js`
+3) Starting the app
 `npm start` will run the client side app. Running it with `NODE_ENV=production` will run the server side with client side app.
 `npm run start:prod:dev` uses nodemon to restart the server when changes are made for easier development
 
